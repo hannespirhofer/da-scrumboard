@@ -1,0 +1,9 @@
+<div class="col">{{ column.name }}
+    @if(column.todos.length > 0) {
+        @for (todo of column.todos; track todo.id) {
+            <app-todo [todo]="todo"></app-todo>
+        }
+    } @else {
+        <div>Drop it like it's 🔥</div>
+    }
+</div>

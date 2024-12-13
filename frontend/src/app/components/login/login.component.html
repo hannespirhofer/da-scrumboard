@@ -1,0 +1,54 @@
+<div class="text-center main-container">
+    <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <img
+            class="mb-4"
+            src="assets/img/logo.svg"
+            alt=""
+            width="72"
+            height="72"
+        />
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input
+            type="text"
+            formControlName="username"
+            id="inputUsername"
+            class="form-control"
+            placeholder="Username"
+            required
+            autofocus
+        />
+        <small
+            *ngIf="submitted && loginForm.get('username')?.errors?.['required']"
+        >
+            User name is required.
+        </small>
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input
+            type="password"
+            formControlName="password"
+            id="inputPassword"
+            class="form-control"
+            placeholder="Password"
+            required
+        />
+        <small
+            *ngIf="submitted && loginForm.get('password')?.errors?.['required']"
+        >
+            Password is required.
+        </small>
+
+        <div class="checkbox mb-3 d-none">
+            <label>
+                <input type="checkbox" value="remember-me" /> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            Sign in
+        </button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2024</p>
+        <p><a class="link-opacity-75" routerLink="/register">Register me</a></p>
+        <p><a class="link-opacity-100" routerLink="/board">To the board</a></p>
+    </form>
+</div>

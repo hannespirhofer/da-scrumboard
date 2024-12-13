@@ -1,0 +1,126 @@
+<div class="text-center main-container">
+    <form
+        class="form-signup"
+        [formGroup]="registerForm"
+        (ngSubmit)="onSubmit()"
+    >
+        <img
+            class="mb-4"
+            src="assets/img/logo.svg"
+            alt=""
+            width="72"
+            height="72"
+        />
+        <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
+
+        <label for="inputFirstname" class="sr-only">Firstname</label>
+        <input
+            formControlName="firstname"
+            type="text"
+            id="inputFirstname"
+            class="form-control"
+            placeholder="Firstname"
+        />
+        <small
+            *ngIf="submitted && registerForm.get('firstname')?.errors?.['minlength']"
+        >
+            First name must be at least 3 characters long.
+        </small>
+
+        <label for="inputLastname" class="sr-only">Lastname</label>
+        <input
+            formControlName="lastname"
+            type="text"
+            id="inputLastname"
+            class="form-control"
+            placeholder="Lastname"
+        />
+        <small
+            *ngIf="submitted && registerForm.get('lastname')?.errors?.['minlength']"
+        >
+            Last name must be at least 3 characters long.
+        </small>
+
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input
+            formControlName="username"
+            type="text"
+            id="inputUsername"
+            class="form-control"
+            placeholder="Username*"
+            required
+            autofocus
+        />
+        <small
+            *ngIf="submitted && registerForm.get('username')?.errors?.['minlength']"
+        >
+            User name must be at least 3 characters long.
+        </small>
+        <small
+            *ngIf="submitted && registerForm.get('username')?.errors?.['required']"
+        >
+            User name is required.
+        </small>
+
+
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input
+            formControlName="email"
+            type="email"
+            id="inputEmail"
+            class="form-control"
+            placeholder="Email address*"
+            required
+        />
+        <small
+            *ngIf="submitted && registerForm.get('email')?.errors?.['email']"
+        >
+            Email has to be provided in the standard format.
+        </small>
+        <small
+            *ngIf="submitted && registerForm.get('email')?.errors?.['required']"
+        >
+            Email is required.
+        </small>
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input
+            formControlName="password"
+            type="password"
+            id="inputPassword"
+            class="form-control"
+            placeholder="Password*"
+            required
+        />
+        <small
+            *ngIf="submitted && registerForm.get('password')?.errors?.['minlength']"
+        >
+            Password must be at leat 4 characters long.
+        </small>
+
+        <label for="inputPasswordConfirm" class="sr-only">Confirm Password</label>
+        <input
+            formControlName="passwordConfirm"
+            type="password"
+            id="inputPasswordConfirm"
+            class="form-control"
+            placeholder="Confirm Password*"
+            required
+        />
+
+        <small *ngIf="submitted && registerForm.errors?.['passwordMismatch']" class="text-danger d-block">
+            Passwords do not match.
+        </small>
+
+        <div class="checkbox mb-3 d-none">
+            <label>
+                <input type="checkbox" value="remember-me" /> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            Sign Up
+        </button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2024</p>
+        <p><a class="link-opacity-75" routerLink="/login">Log me in</a></p>
+    </form>
+</div>

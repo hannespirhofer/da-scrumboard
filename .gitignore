@@ -1,0 +1,146 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+### Personal ###
+backend/todo.txt
+overview.md
+
+#region FRONTEND
+
+# Compiled output
+frontend/tmp
+frontend/dist
+frontend/out-tsc
+frontend/bazel-out
+
+# Node
+frontend/node_modules
+frontend/npm-debug.log
+frontend/yarn-error.log
+
+# IDEs and editors
+frontend/.idea/
+frontend/.project
+frontend/.classpath
+frontend/.c9/
+frontend/*.launch
+frontend/.settings/
+frontend/*.sublime-workspace
+
+# Visual Studio Code
+frontend/.vscode/*
+!frontend/.vscode/settings.json
+!frontend/.vscode/tasks.json
+!frontend/.vscode/launch.json
+!frontend/.vscode/extensions.json
+frontend/.history/*
+
+# Miscellaneous
+frontend/.angular/cache/
+frontend/.sass-cache/
+frontend/connect.lock
+frontend/coverage
+frontend/libpeerconnection.log
+frontend/testem.log
+frontend/typings
+
+# System files
+frontend/.DS_Store
+frontend/Thumbs.db
+
+#endregion
+
+
+
+#region BACKEND
+
+# Created by https://www.gitignore.io
+
+### OSX ###
+backend/.DS_Store
+backend/.AppleDouble
+backend/.LSOverride
+
+# Icon must end with two \r
+backend/Icon
+
+# Thumbnails
+backend._*
+
+# Files that might appear on external disk
+backend/.Spotlight-V100
+backend/.Trashes
+
+# Directories potentially created on remote AFP share
+backend/.AppleDB
+backend/.AppleDesktop
+backend/Network Trash Folder
+backend/Temporary Items
+backend/.apdisk
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.py[cod]
+
+# C extensions
+backend/*.so
+
+# Distribution / packaging
+backend/.Python
+backend/env/
+backend/build/
+backend/develop-eggs/
+backend/dist/
+backend/downloads/
+backend/eggs/
+backend/lib/
+backend/lib64/
+backend/parts/
+backend/sdist/
+backend/var/
+backend/*.egg-info/
+backend/.installed.cfg
+backend/*.egg
+
+# PyInstaller
+# Usually these files are written by a python script from a template
+# before PyInstaller builds the exe, so as to inject date/other infos into it.
+backend/*.manifest
+backend/*.spec
+
+# Installer logs
+backend/pip-log.txt
+backend/pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+backend/htmlcov/
+backend/.tox/
+backend/.coverage
+backend/.cache
+backend/nosetests.xml
+backend/coverage.xml
+
+# Translations
+backend/*.mo
+backend/*.pot
+
+# Sphinx documentation
+backend/docs/_build/
+
+# PyBuilder
+backend/target/
+
+### Django ###
+backend/*.log
+backend/*.pot
+backend/*.pyc
+backend/__pycache__/
+backend/local_settings.py
+
+backend/.env
+backend/db.sqlite3
+
+py.py
+
+#endregion

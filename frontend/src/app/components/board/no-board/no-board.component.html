@@ -1,0 +1,7 @@
+
+<p>Select a board from the left sidebar or create a new one!</p>
+
+<form class="new-board" [formGroup]="newBoardForm" (ngSubmit)="createBoard()">
+    <input type="text" placeholder="Board Name" formControlName="boardName">
+    <button type="submit" [disabled]="!this.newBoardForm.valid">Create Board</button>
+</form>

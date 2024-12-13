@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.custom-snackbar {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10000;
+}
+.custom-snackbar .toast-header {
+  display: flex;
+  justify-content: space-between;
+}
+.custom-snackbar .toast .close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.mr-2,
+.mx-2 {
+  margin-right: 0.5rem !important;
+}
+
+.toast-error {
+  color: red;
+}/*# sourceMappingURL=styles.css.map */

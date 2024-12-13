@@ -1,0 +1,172 @@
+<!-- Board Header -->
+<app-header title="Board"></app-header>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Board Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    @for (project of userProjects | async; track project.id) {
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            [class.active]="project.id === project.id"
+                            [routerLink]="['/board', project.id]"
+                        >
+                            <span data-feather="home"></span>
+                            {{ project.name }}
+                            <ng-container *ngIf="currentProjectID as id">
+                                <span *ngIf="id === project.id" class="sr-only"
+                                    >(current)</span
+                                >
+                            </ng-container>
+                        </a>
+                    </li>
+                    }
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            [routerLink]="['/board/new']"
+                        >
+                            <span data-feather="home"></span>
+                            Create new Board
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Other Sidebar Links Start -->
+                <!-- <h6
+                    class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
+                >
+                    <span>Other</span>
+                    <a class="d-flex align-items-center text-muted" href="#">
+                        <span data-feather="plus-circle"></span>
+                    </a>
+                </h6>
+                <ul class="nav flex-column mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="#">
+                            <span data-feather="file-text"></span>
+                            Current month
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="#">
+                            <span data-feather="file-text"></span>
+                            Last quarter
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="#">
+                            <span data-feather="file-text"></span>
+                            Social engagement
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="#">
+                            <span data-feather="file-text"></span>
+                            Year-end sale
+                        </a>
+                    </li>
+                </ul> -->
+                <!-- Other Sidebar Links End -->
+
+            </div>
+        </nav>
+
+        @if(isBoardSelected) {
+
+        <!-- Main Board Area - on loaded Board -->
+        <ng-container *ngIf="selectedProject | async as project">
+            <main
+                role="main"
+                class="d-flex flex-column col-md-9 col-lg-10 ml-sm-auto pt-3 px-4"
+            >
+                <!-- Header -->
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom"
+                >
+                    <h1 class="h2">{{ project.name }}</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0" role="toolbar">
+                        <div class="btn-group mr-2">
+                            <button
+                                class="btn btn-sm btn-outline-secondary"
+                                (click)="addMagic()"
+                            >
+                                Magic 🪄
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-secondary">
+                                Add Todo
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-secondary">
+                                Add Column
+                            </button>
+                        </div>
+
+                        @if(isOwner()) {
+                        <div class="dropdown btn-group mr-2">
+                            <button
+                                class="btn btn-outline-secondary dropdown-toggle"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                            >
+                                Edit Project
+                            </button>
+                            <div
+                                class="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton"
+                            >
+                                <a class="dropdown-item" routerLink="#"
+                                    >Edit Project Details</a
+                                >
+                                <a
+                                    class="dropdown-item link-danger"
+                                    routerLink="#"
+                                    >Delete project</a
+                                >
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <!-- Header End -->
+
+                <!-- Main Container -->
+                <div class="">
+                    <div class="container text-center">
+                        <div class="row">
+                            @if(project.columns.length > 0) { @for (col of
+                            project.columns; track col.id) {
+
+                            <app-column [column]="col" class="col"></app-column>
+
+                            } } @else {
+                            <div>
+                                No Columns created yet. <a>Create one.</a>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- Main Container End -->
+            </main>
+        </ng-container>
+
+        } @else {
+
+        <main
+            role="main"
+            class="d-flex flex-column col-md-9 col-lg-10 ml-sm-auto pt-3 px-4"
+        >
+            <app-no-board></app-no-board>
+        </main>
+
+        }
+    </div>
+</div>
