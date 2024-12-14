@@ -2,7 +2,6 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from board.views import (
     BoardViewset,
-    ColumnViewSet,
     LoginView,
     LogoutView,
     RegisterView,
@@ -12,7 +11,6 @@ from board.views import (
 # Create API router and register subroutes
 router = DefaultRouter()
 router.register(r"boards", BoardViewset)
-router.register(r"columns", ColumnViewSet)
 router.register(r"todos", TodoViewSet)
 
 # Django URLpatterns including router.urls(/api routes)

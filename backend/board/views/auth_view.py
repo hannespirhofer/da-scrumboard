@@ -1,7 +1,6 @@
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 
-from board.serializers import RegisterSerializer
 
 from rest_framework import permissions
 from rest_framework import status
@@ -14,6 +13,8 @@ from rest_framework.authentication import (
     BasicAuthentication,
     TokenAuthentication,
 )
+
+from board.serializers.auth_serializer import RegisterSerializer
 
 
 class RegisterView(CreateAPIView):

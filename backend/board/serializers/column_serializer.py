@@ -12,8 +12,14 @@ class ColumnSerializer(serializers.ModelSerializer):
     Renders the todos by the TodosSerializer inside the columns
     """
 
-    todos = TodoSerializer(many=True, read_only=True)
+    todos = serializers.SerializerMethodField()
+
+    def get_todos(self, obj):
+        board_id = self.context.get("board_id")
+        if board_id:
+            return TodoSerializer(obj.todos.filter(board_id = board_id), many = True).data
+        return []
 
     class Meta:
         model = Column
-        fields = ("id", "name", "board", "todos")
+        fields = "__all__"

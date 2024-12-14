@@ -12,4 +12,5 @@ class TodoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Todo
-        fields = ("id", "title", "description", "column", "completed", "author")
+        fields = "__all__"
+        extra_kwargs = {'author': {'required': False}}

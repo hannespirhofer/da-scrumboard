@@ -1,11 +1,10 @@
 from board.models import Board
 from django.db.models import Q
 
-from board.serializers import BoardSerializer, BoardsOverviewSerializer
+from board.serializers.board_serializer import BoardSerializer, BoardsSerializer
 
 from rest_framework import permissions, viewsets
 from rest_framework.authentication import (
-    BasicAuthentication,
     TokenAuthentication,
 )
 
@@ -20,7 +19,6 @@ class BoardViewset(viewsets.ModelViewSet):
 
     queryset = Board.objects.all()
     authentication_classes = [
-        # BasicAuthentication,
         TokenAuthentication,
     ]
     permission_classes = [permissions.IsAuthenticated]
@@ -32,24 +30,27 @@ class BoardViewset(viewsets.ModelViewSet):
     boards, which can be displayed in the sidebar.
     """
 
+    # already authenticated here
     def get_queryset(self):
         user = self.request.user
         boards = Board.objects.filter(Q(owner=user) | Q(members=user)).distinct()
         return boards
 
-    # All methods available (just a simpler serializer for retrieve (Detail View) method)
+    """
+    Change serializer for Detail request on board/id
+    """
 
     def get_serializer_class(self):
-        # For a single item
+        # For a single item accessed by /boards/:id
         if self.action == "retrieve":
             return BoardSerializer
-        # For list items - action list
-        return BoardsOverviewSerializer
+        # For list items - action list accessed on /boards/
+        return BoardsSerializer
 
     """
     Overrides the default create method on POST and adds the authenticated user as the owner of the board.
     """
-
+    # Todo -> add another Serializer here -> actually BoardsSerializer is used here
     def perform_create(self, serializer):
         board = serializer.save(owner=self.request.user)
         board.members.add(self.request.user)

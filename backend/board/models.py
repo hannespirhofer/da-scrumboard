@@ -10,25 +10,24 @@ class Board(models.Model):
     members = models.ManyToManyField(User, related_name="board_members")
 
     def __str__(self):
-        return self.name
+        return f"ID: {self.pk} - {self.name}"
 
 
 class Column(models.Model):
     name = models.CharField(max_length=255)
-    board = models.ForeignKey(Board, related_name="columns", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"({self.board}) {self.name}"
+        return f"ID: {self.pk} - {self.name}"
 
 
 class Todo(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255) #required as cant be null
     description = models.TextField(blank=True, null=True)
     completed = models.BooleanField(default=False)
-    column = models.ForeignKey(Column, related_name="todos", on_delete=models.CASCADE)
-    author = models.ForeignKey(
-        User, related_name="todo_author", on_delete=models.CASCADE
-    )
+
+    board = models.ForeignKey(Board, related_name="todos", on_delete=models.CASCADE) #required as cant be null
+    column = models.ForeignKey(Column, related_name="todos", on_delete=models.CASCADE) #required as cant be null
+    author = models.ForeignKey(User, related_name="todos", on_delete=models.CASCADE) #required as cant be null
 
     def __str__(self):
-        return self.title
+        return f"ID: {self.pk} - {self.title}"

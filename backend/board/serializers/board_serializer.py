@@ -1,34 +1,37 @@
+import logging
 from rest_framework import serializers
+from board.models import Board, Column
 
-from board.models import Board
-
-from .user_serializer import UserSerializer
-from .column_serializer import ColumnSerializer
+from board.serializers.user_serializer import UserSerializer
+from board.serializers.column_serializer import ColumnSerializer
 
 
 # Part of the Board Serializer to serialize User Data
 
-
 class BoardSerializer(serializers.ModelSerializer):
     """
     Serializer For the Board
-
     Renders the columns by the ColumnSerializer inside the board
+    -> It adds the owner, members, columns data to the Board Serializer
     """
-
-    owner = UserSerializer()
-    members = UserSerializer(many=True)
-    columns = ColumnSerializer(many=True, read_only=True)
 
     class Meta:
         model = Board
         fields = "__all__"
 
+    owner = UserSerializer()
+    members = UserSerializer(many=True)
+    columns = serializers.SerializerMethodField()
 
-class BoardsOverviewSerializer(serializers.ModelSerializer):
+    def get_columns(self, obj):
+        columns = Column.objects.all()
+        serializer_context = {"board_id": obj.id}
+        return ColumnSerializer(columns, many=True, context=serializer_context).data
+
+
+class BoardsSerializer(serializers.ModelSerializer):
     """
     Serializer for the Board List Overview (Sidebar)
-
     This serializer is used to provide a simplified overview of boards,
     including only the ID and the name of each board. It is intended
     to be used for rendering a list of boards in the sidebar.
