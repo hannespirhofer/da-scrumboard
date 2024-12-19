@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input, input } from "@angular/core";
-import { DefaultTodo, Todo } from "../../interfaces/todo";
+import { TodoMock, Todo } from "../../interfaces/todo";
 
 @Component({
     selector: "app-todo",
@@ -10,5 +10,5 @@ import { DefaultTodo, Todo } from "../../interfaces/todo";
     styleUrl: "./todo.component.scss",
 })
 export class TodoComponent {
-    @Input({ required: true }) todo: Todo = DefaultTodo;
+    @Input({ required: true }) todo: Todo = TodoMock;
 }

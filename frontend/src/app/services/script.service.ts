@@ -5,6 +5,7 @@ import { ScriptStore } from "../external/script.store";
     providedIn: "root",
 })
 export class ScriptService {
+    public loadScripts = false;
     private scripts: any = {};
 
     constructor() {

@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { lastValueFrom } from "rxjs";
+import { lastValueFrom, Observable } from "rxjs";
+import { BoardList } from "../interfaces/board-list";
+import { BoardDetail } from "../interfaces/board-detail";
 
 @Injectable({
     providedIn: "root",
@@ -10,14 +12,14 @@ export class BoardDataService {
 
     constructor(private http: HttpClient) {}
 
-    getBoardListData() {
+    getBoardListData(): Observable<BoardList[]> {
         const url = this.url + "boards/";
-        return lastValueFrom(this.http.get(url));
+        return this.http.get<BoardList[]>(url);
     }
 
-    getBoardData(boardid: number) {
+    getBoardData(boardid: number): Observable<BoardDetail> {
         const url = this.url + "boards/" + boardid + "/";
-        return lastValueFrom(this.http.get(url));
+        return this.http.get<BoardDetail>(url);
     }
 
     postBoard(boardName: string) {

@@ -6,6 +6,32 @@ body {
     width: 100%;
 }
 
+// Custom Globals
+
+._df {
+    display: flex;
+}
+
+._fdc {
+    flex-direction: column;
+}
+
+._fdr {
+    flex-direction: row;
+}
+
+._g05 {
+    gap: .5em;
+}
+
+._g1 {
+    gap: 1em;
+}
+
+._g2 {
+    gap: 2em;
+}
+
 // Snackbar global styling
 
 .custom-snackbar {

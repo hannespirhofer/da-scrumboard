@@ -1,17 +1,17 @@
 export interface Todo {
-    id: number;
+    id: number|null;
     title: string;
     description: string;
-    column: number;
+    column: number|null;
     completed: boolean;
-    author: number;
+    author: number|null;
 }
 
-export const DefaultTodo: Todo = {
-    id: 0,
-    title: "",
-    description: "",
-    column: 0,
+export const TodoMock: Todo = {
+    id: 1,
+    title: "Mock Task",
+    description: "This is a mock task for testing purposes",
+    column: 1,
     completed: false,
-    author: 0,
+    author: 1
 };

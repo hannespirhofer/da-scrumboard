@@ -23,12 +23,14 @@ export class HeaderComponent implements OnInit {
     @Input({ required: true }) title: string = "Board";
 
     ngOnInit(): void {
-        this.script
-            .load("jquery", "popper", "bootstrap")
-            .then((data) => {
-                console.log("external scripts loaded", data);
-            })
-            .catch((error) => console.error("scripts not loaded", error));
+        if (this.script.loadScripts) {
+            this.script
+                .load("jquery", "popper", "bootstrap")
+                .then((data) => {
+                    console.log("external scripts loaded", data);
+                })
+                .catch((error) => console.error("scripts not loaded", error));
+        }
     }
 
     async onLogout() {

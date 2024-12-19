@@ -1,4 +1,4 @@
-import { Todo } from "./todo";
+import { Todo, TodoMock } from "./todo";
 
 export interface Column {
     id: number;
@@ -7,9 +7,11 @@ export interface Column {
     todos: Todo[];
 }
 
-export const DefaultColumn: Column = {
-    id: 0,
-    name: "",
-    board: 0,
-    todos: [],
+export const ColumnMock: Column = {
+    id: 1,
+    name: "To Do",
+    board: 1,
+    todos: [
+        TodoMock
+    ]
 };

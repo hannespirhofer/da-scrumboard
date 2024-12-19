@@ -1,5 +1,5 @@
-import { Column } from "./column";
-import { User } from "./user";
+import { Column, ColumnMock } from "./column";
+import { User, UserMock } from "./user";
 
 export interface BoardDetail {
     id: number;
@@ -9,17 +9,12 @@ export interface BoardDetail {
     name: string;
 }
 
-export const BoardDetailDefault: BoardDetail = {
-    id: 0,
-    name: "",
-    owner: {
-        id: 0,
-        username: "",
-        first_name: "",
-        last_name: "",
-    },
-    members: [],
-    columns: [],
+export const BoardDetailMock: BoardDetail = {
+    id: 1,
+    owner: UserMock,
+    members: [UserMock],
+    columns: [ColumnMock],
+    name: "Mock Project Board"
 };
 
 export const BoardExtended: BoardDetail = {

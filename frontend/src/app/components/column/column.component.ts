@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { TodoComponent } from "../todo/todo.component";
-import { Column, DefaultColumn } from "../../interfaces/column";
+import { Column, ColumnMock } from "../../interfaces/column";
 
 @Component({
     selector: "app-column",
@@ -11,5 +11,6 @@ import { Column, DefaultColumn } from "../../interfaces/column";
     styleUrl: "./column.component.scss",
 })
 export class ColumnComponent {
-    @Input({ required: true }) column: Column = DefaultColumn;
+    @Input({ required: true }) column: Column = ColumnMock;
 }
+

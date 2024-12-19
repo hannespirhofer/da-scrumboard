@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Board Sidebar -->
-        <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light sidebar">
+        <nav class="col-3 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     @for (project of userProjects | async; track project.id) {
@@ -34,44 +34,6 @@
                         </a>
                     </li>
                 </ul>
-
-                <!-- Other Sidebar Links Start -->
-                <!-- <h6
-                    class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
-                >
-                    <span>Other</span>
-                    <a class="d-flex align-items-center text-muted" href="#">
-                        <span data-feather="plus-circle"></span>
-                    </a>
-                </h6>
-                <ul class="nav flex-column mb-2">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="#">
-                            <span data-feather="file-text"></span>
-                            Current month
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="#">
-                            <span data-feather="file-text"></span>
-                            Last quarter
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="#">
-                            <span data-feather="file-text"></span>
-                            Social engagement
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="#">
-                            <span data-feather="file-text"></span>
-                            Year-end sale
-                        </a>
-                    </li>
-                </ul> -->
-                <!-- Other Sidebar Links End -->
-
             </div>
         </nav>
 
@@ -81,32 +43,21 @@
         <ng-container *ngIf="selectedProject | async as project">
             <main
                 role="main"
-                class="d-flex flex-column col-md-9 col-lg-10 ml-sm-auto pt-3 px-4"
+                class="col-sm-12 col-md-9 _df _fdc ml-sm-auto pt-3 px-4"
             >
                 <!-- Header -->
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom"
-                >
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">{{ project.name }}</h1>
                     <div class="btn-toolbar mb-2 mb-md-0" role="toolbar">
                         <div class="btn-group mr-2">
-                            <button
-                                class="btn btn-sm btn-outline-secondary"
-                                (click)="addMagic()"
-                            >
-                                Magic 🪄
-                            </button>
 
                             <button class="btn btn-sm btn-outline-secondary">
                                 Add Todo
                             </button>
 
-                            <button class="btn btn-sm btn-outline-secondary">
-                                Add Column
-                            </button>
                         </div>
 
-                        @if(isOwner()) {
+                        @if(getOwner()) {
                         <div class="dropdown btn-group mr-2">
                             <button
                                 class="btn btn-outline-secondary dropdown-toggle"
@@ -162,7 +113,7 @@
 
         <main
             role="main"
-            class="d-flex flex-column col-md-9 col-lg-10 ml-sm-auto pt-3 px-4"
+            class="col-sm-12 col-md-9 d-flex flex-column ml-sm-auto pt-3 px-4"
         >
             <app-no-board></app-no-board>
         </main>
