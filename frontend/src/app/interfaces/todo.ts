@@ -5,6 +5,7 @@ export interface Todo {
     column: number|null;
     completed: boolean;
     author: number|null;
+    order: number;
 }
 
 export const TodoMock: Todo = {
@@ -13,5 +14,6 @@ export const TodoMock: Todo = {
     description: "This is a mock task for testing purposes",
     column: 1,
     completed: false,
-    author: 1
+    author: 1,
+    order: 0,
 };

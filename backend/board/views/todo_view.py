@@ -32,9 +32,8 @@ class TodoViewSet(viewsets.ModelViewSet):
         return super().get_queryset()
 
     def perform_create(self, serializer):
-        # serializer.save(author=self.request.user)
         try:
-            todo =serializer.save(author=self.request.user)
+            todo = serializer.save(author=self.request.user)
             logging.info(f"Todo saved: {todo}")
         except Exception as e:
             logging.error(f"Couldn `t save the todo: {e}")

@@ -46,6 +46,7 @@ export const BoardExtended: BoardDetail = {
                     column: 1,
                     completed: false,
                     author: 1,
+                    order: 0,
                 },
                 {
                     id: 2,
@@ -54,6 +55,7 @@ export const BoardExtended: BoardDetail = {
                     column: 1,
                     completed: false,
                     author: 1,
+                    order: 1,
                 },
                 {
                     id: 3,
@@ -62,6 +64,7 @@ export const BoardExtended: BoardDetail = {
                     column: 1,
                     completed: false,
                     author: 1,
+                    order: 2,
                 },
             ],
         },
@@ -77,6 +80,7 @@ export const BoardExtended: BoardDetail = {
                     column: 2,
                     completed: false,
                     author: 1,
+                    order: 0,
                 },
             ],
         },

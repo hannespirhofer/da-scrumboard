@@ -1,9 +1,13 @@
 <div class="col _df _fdc _g05">{{ column.name }}
+    <div
+        class="tasks-wrapper">
     @if(column.todos.length > 0) {
-        @for (todo of column.todos; track todo.id) {
-            <app-todo [todo]="todo"></app-todo>
+
+        @for (todo of column.todos | sortBy: 'order'; track todo.id) {
+            <app-todo class="todo-item" [todo]="todo" cdkDrag></app-todo>
         }
     } @else {
         <div>Drop it like it's 🔥</div>
     }
+    </div>
 </div>

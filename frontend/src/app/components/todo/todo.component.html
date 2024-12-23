@@ -1,6 +1,10 @@
-<div class="todo card">
+<div class="todo card"
+  (mouseenter)="hoveredCard = todo.id;"
+  (mouseleave)="hoveredCard = null;"
+  [class.hovered]="hoveredCard === todo.id"
+  >
     <div class="card-body">
-      <h5 class="card-title">{{ todo.title }}</h5>
+      <h5 class="card-title">[{{todo.id}}] {{ todo.title }}</h5>
       <p class="card-text">{{ todo.description }}</p>
     </div>
 </div>

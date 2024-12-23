@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input, input } from "@angular/core";
+import { Component, Input, input, OnInit } from "@angular/core";
 import { TodoMock, Todo } from "../../interfaces/todo";
 
 @Component({
@@ -9,6 +9,12 @@ import { TodoMock, Todo } from "../../interfaces/todo";
     templateUrl: "./todo.component.html",
     styleUrl: "./todo.component.scss",
 })
-export class TodoComponent {
+export class TodoComponent{
     @Input({ required: true }) todo: Todo = TodoMock;
+
+    hoveredCard: number | null = null;
+
+    log() {
+        console.log(this.hoveredCard);
+    }
 }

@@ -13,4 +13,6 @@ class TodoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todo
         fields = "__all__"
-        extra_kwargs = {'author': {'required': False}}
+        extra_kwargs = {
+            'author': {'required': False},
+            'order': {'required': False}}

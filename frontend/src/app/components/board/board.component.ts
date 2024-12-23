@@ -9,6 +9,14 @@ import { TodoComponent } from "../todo/todo.component";
 import { ColumnComponent } from "../column/column.component";
 import { HeaderComponent } from "./header/header.component";
 import { NoBoardComponent } from "./no-board/no-board.component";
+import {
+    CdkDragDrop,
+    CdkDropList,
+    CdkDropListGroup,
+    moveItemInArray,
+    transferArrayItem,
+  } from '@angular/cdk/drag-drop';
+import { Todo } from "../../interfaces/todo";
 
 @Component({
     selector: "app-board",
@@ -21,6 +29,8 @@ import { NoBoardComponent } from "./no-board/no-board.component";
         TodoComponent,
         ColumnComponent,
         NoBoardComponent,
+        CdkDropListGroup,
+        CdkDropList,
     ],
     templateUrl: "./board.component.html",
     styleUrl: "./board.component.scss",
@@ -56,10 +66,34 @@ export class BoardComponent implements OnInit, OnDestroy {
                 this.isBoardSelected = true;
                 this.currentProjectID = id;
                 this.selectedProject = this.board.getBoardDetail(id);
+                this.logDetail();
             } else {
                 this.isBoardSelected = false;
             }
         });
+    }
+
+    drop(event: CdkDragDrop<Todo[]>, project: BoardDetail) {
+        console.log(project.columns);
+
+
+        if (event.previousContainer === event.container) {
+            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        } else {
+            transferArrayItem(
+            event.previousContainer.data,
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex,
+            );
+        }
+
+      }
+
+    logDetail() {
+        this.selectedProject.subscribe((x) => {
+            console.log('Selected Project: ', x);
+        })
     }
 
     getOwner() {

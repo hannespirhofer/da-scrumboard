@@ -53,6 +53,18 @@ body {
   text-transform: uppercase;
 }
 
+.main-wrapper {
+  height: 100%;
+  width: 100%;
+}
+.main-wrapper .container {
+  height: 100%;
+  width: 100%;
+}
+.main-wrapper .container .row {
+  height: 100%;
+}
+
 /*
  * Utilities
  */

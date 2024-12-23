@@ -89,13 +89,19 @@
                 <!-- Header End -->
 
                 <!-- Main Container -->
-                <div class="">
+                <div class="main-wrapper">
                     <div class="container text-center">
-                        <div class="row">
-                            @if(project.columns.length > 0) { @for (col of
-                            project.columns; track col.id) {
+                        <div class="row" cdkDropListGroup>
+                            @if(project.columns.length > 0) {
+                                @for (col of project.columns; track col.id) {
 
-                            <app-column [column]="col" class="col"></app-column>
+                            <app-column
+                                cdkDropList
+                                [cdkDropListData]="col.todos"
+                                (cdkDropListDropped)="drop($event, project)"
+                                [column]="col"
+                                class="col"
+                                ></app-column>
 
                             } } @else {
                             <div>

@@ -59,6 +59,24 @@ body {
     text-transform: uppercase;
 }
 
+// Main
+
+.main-wrapper {
+
+    height: 100%;
+    width: 100%;
+
+    .container {
+        height: 100%;
+        width: 100%;
+
+        .row {
+            height: 100%;
+        }
+
+    }
+}
+
 /*
  * Utilities
  */
