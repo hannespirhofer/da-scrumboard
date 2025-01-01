@@ -7,7 +7,7 @@
         <nav class="col-3 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                    @for (project of userProjects | async; track project.id) {
+                    @for (project of userProjects; track project.id) {
                     <li class="nav-item">
                         <a
                             class="nav-link"
@@ -37,93 +37,15 @@
             </div>
         </nav>
 
-        @if(isBoardSelected) {
-
-        <!-- Main Board Area - on loaded Board -->
-        <ng-container *ngIf="selectedProject | async as project">
-            <main
-                role="main"
-                class="col-sm-12 col-md-9 _df _fdc ml-sm-auto pt-3 px-4"
-            >
-                <!-- Header -->
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                    <h1 class="h2">{{ project.name }}</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0" role="toolbar">
-                        <div class="btn-group mr-2">
-
-                            <button class="btn btn-sm btn-outline-secondary">
-                                Add Todo
-                            </button>
-
-                        </div>
-
-                        @if(getOwner()) {
-                        <div class="dropdown btn-group mr-2">
-                            <button
-                                class="btn btn-outline-secondary dropdown-toggle"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                            >
-                                Edit Project
-                            </button>
-                            <div
-                                class="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                            >
-                                <a class="dropdown-item" routerLink="#"
-                                    >Edit Project Details</a
-                                >
-                                <a
-                                    class="dropdown-item link-danger"
-                                    routerLink="#"
-                                    >Delete project</a
-                                >
-                            </div>
-                        </div>
-                        }
-                    </div>
-                </div>
-                <!-- Header End -->
-
-                <!-- Main Container -->
-                <div class="main-wrapper">
-                    <div class="container text-center">
-                        <div class="row" cdkDropListGroup>
-                            @if(project.columns.length > 0) {
-                                @for (col of project.columns; track col.id) {
-
-                            <app-column
-                                cdkDropList
-                                [cdkDropListData]="col.todos"
-                                (cdkDropListDropped)="drop($event, project)"
-                                [column]="col"
-                                class="col"
-                                ></app-column>
-
-                            } } @else {
-                            <div>
-                                No Columns created yet. <a>Create one.</a>
-                            </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <!-- Main Container End -->
-            </main>
-        </ng-container>
-
-        } @else {
 
         <main
             role="main"
-            class="col-sm-12 col-md-9 d-flex flex-column ml-sm-auto pt-3 px-4"
+            class="col-sm-12 col-md-9 _df _fdc ml-sm-auto pt-3 px-4"
         >
-            <app-no-board></app-no-board>
+
+            <router-outlet></router-outlet>
+
         </main>
 
-        }
     </div>
 </div>

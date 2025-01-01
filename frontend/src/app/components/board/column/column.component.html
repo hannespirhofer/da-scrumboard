@@ -3,7 +3,7 @@
         class="tasks-wrapper">
     @if(column.todos.length > 0) {
 
-        @for (todo of column.todos | sortBy: 'order'; track todo.id) {
+        @for (todo of column.todos; track todo.id) {
             <app-todo class="todo-item" [todo]="todo" cdkDrag></app-todo>
         }
     } @else {

@@ -5,13 +5,13 @@ import { SnackService } from "../../../services/snack.service";
 import { Router } from "@angular/router";
 
 @Component({
-    selector: "app-no-board",
+    selector: "app-new-board",
     standalone: true,
     imports: [ReactiveFormsModule],
-    templateUrl: "./no-board.component.html",
-    styleUrl: "./no-board.component.scss",
+    templateUrl: "./new-board.component.html",
+    styleUrl: "./new-board.component.scss",
 })
-export class NoBoardComponent {
+export class NewBoardComponent {
     constructor(
         private formBuilder: FormBuilder,
         private boardDataService: BoardDataService,
@@ -32,7 +32,7 @@ export class NoBoardComponent {
             await this.snack.show(
                 `Board created wit the id ${boardId}`,
                 "You will be redirected to board page.",
-                1000
+                1800
             );
             // TODO Update the left sidebar
             this.router.navigate(["board", boardId]);

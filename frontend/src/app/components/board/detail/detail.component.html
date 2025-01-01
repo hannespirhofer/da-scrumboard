@@ -1,0 +1,80 @@
+@if(isBoardSelected) {
+
+    <!-- Main Board Area - on loaded Board -->
+    <ng-container *ngIf="selectedProject as project">
+        <!-- Board Detail Header -->
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">{{ project.name }}</h1>
+            <div class="btn-toolbar mb-2 mb-md-0" role="toolbar">
+                <div class="btn-group mr-2">
+
+                    <a routerLink="new" class="btn btn-sm btn-outline-secondary">
+                        Add Todo
+                    </a>
+
+                </div>
+
+                <!-- Not in use - Board Owner edit fields-->
+                @if(getOwner() || true) {
+                    <div class="dropdown btn-group mr-2">
+                        <button
+                            class="btn btn-outline-secondary dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            Edit Project
+                        </button>
+                        <div
+                            class="dropdown-menu"
+                            aria-labelledby="dropdownMenuButton"
+                        >
+                            <a class="dropdown-item" routerLink="#"
+                                >Edit Project Details</a
+                            >
+                            <a
+                                class="dropdown-item link-danger"
+                                routerLink="#"
+                                >Delete project</a
+                            >
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <!-- Main Container -->
+        <div class="main-wrapper">
+            <div class="container text-center">
+                <div class="row" cdkDropListGroup>
+                    @if(project.columns.length > 0) {
+                        @for (col of project.columns; track col.id) {
+
+                    <app-column
+                        cdkDropList
+                        [cdkDropListData]="col.todos"
+                        (cdkDropListDropped)="drop($event, col)"
+                        [column]="col"
+                        class="col"
+                        ></app-column>
+
+                    } } @else {
+                    <div>
+                        No Columns created yet. <a>Create one.</a>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- Main Container End -->
+    </ng-container>
+
+    } @else {
+
+    Couldn`t load project details
+
+
+}

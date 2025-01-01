@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NoBoardComponent } from './no-board.component';
+import { NewTodoComponent } from './new-todo.component';
 
-describe('NoBoardComponent', () => {
-  let component: NoBoardComponent;
-  let fixture: ComponentFixture<NoBoardComponent>;
+describe('NewTodoComponent', () => {
+  let component: NewTodoComponent;
+  let fixture: ComponentFixture<NewTodoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoBoardComponent]
+      imports: [NewTodoComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NoBoardComponent);
+    fixture = TestBed.createComponent(NewTodoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

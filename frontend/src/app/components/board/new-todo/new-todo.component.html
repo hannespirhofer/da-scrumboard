@@ -1,0 +1,22 @@
+<h2>Create a new Todo for board ...get board name from service</h2>
+
+<form [formGroup]="todoForm" (ngSubmit)="onTodoSubmit()">
+    <label for="board">Board Id: </label>
+    <input required id="board" type="number" formControlName="board">
+
+    <label for="column">Spalte: </label>
+    <select formControlName="column" id="column">
+        @for (col of columns; track col.value) {
+            <option [value]="col.value">
+                {{ col.label }}
+            </option>
+        }
+        </select>
+
+    <label for="title">Titel: </label>
+    <input required minlength="3" id="title" type="text" formControlName="title">
+
+    <label for="description">Last Name: </label>
+    <input required minlength="5" id="description" type="text" formControlName="description">
+    <button type="submit" [disabled]="!todoForm.valid">Send</button>
+</form>

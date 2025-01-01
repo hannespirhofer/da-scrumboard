@@ -17,7 +17,8 @@ class ColumnSerializer(serializers.ModelSerializer):
     def get_todos(self, obj):
         board_id = self.context.get("board_id")
         if board_id:
-            return TodoSerializer(obj.todos.filter(board_id = board_id), many = True).data
+            todos = obj.todos.filter(board_id = board_id).order_by('order')
+            return TodoSerializer(todos, many = True).data
         return []
 
     class Meta:

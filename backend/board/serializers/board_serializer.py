@@ -1,4 +1,3 @@
-import logging
 from rest_framework import serializers
 from board.models import Board, Column
 
@@ -23,6 +22,7 @@ class BoardSerializer(serializers.ModelSerializer):
     members = UserSerializer(many=True)
     columns = serializers.SerializerMethodField()
 
+    # SerilizerMethodField checks for get_name method inside Class
     def get_columns(self, obj):
         columns = Column.objects.all()
         serializer_context = {"board_id": obj.id}

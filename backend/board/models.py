@@ -1,7 +1,5 @@
 from django.db import models
-from django.db.models import Max
 from django.contrib.auth.models import User
-from requests import delete
 
 
 class Board(models.Model):
@@ -33,19 +31,30 @@ class Todo(models.Model):
     order = models.PositiveIntegerField(null=False, blank=False)
 
     def __str__(self):
-        return f"Todo: {self.pk} - Order: {self.order}"
+        return f"{self.title} [{self.pk}] (Order: {self.order})"
 
     def save(self, *args, **kwargs):
         todos = Todo.objects.filter(column=self.column, board=self.board)
+        old_order = kwargs.pop('old_order', None)
+        totaltodos = todos.count()
 
+        # mir hobn kuane order - a nuies todo
         if self.order is None:
-            self.order = todos.aggregate(Max('order'))['order__max'] + 1 if todos.exists() else 0
-        else:
-            total_todos = todos.count()
-            if self.order > total_todos:
-                self.order = total_todos
+            # setzn auf letztn plotz
+            self.order = totaltodos
 
-            todos.filter(order__gte=self.order).update(order=models.F('order') + 1)
+        # mir hobn an self.order
+        else:
+            # wenn er greaser isch wie die todoliste
+            if self.order > totaltodos:
+                self.order = totaltodos - 1
+            # mir brauchn die olte order ah
+            elif old_order is not None:
+            # wenn er innerholb der liste isch
+                if self.order > old_order:
+                    todos.filter(order__gt=old_order, order__lte=self.order).update(order=models.F('order') - 1)
+                elif self.order < old_order:
+                    todos.filter(order__gte=self.order, order__lt=old_order).update(order=models.F('order') + 1)
 
         super().save(*args, **kwargs)
 

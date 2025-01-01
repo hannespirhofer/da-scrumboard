@@ -1,4 +1,4 @@
-from board.models import Todo
+from board.models import Column, Todo
 
 from board.serializers.todo_serializer import TodoSerializer
 
@@ -7,6 +7,7 @@ from rest_framework.authentication import (
     TokenAuthentication,
 )
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.response import Response
 
 import logging
 
@@ -37,3 +38,23 @@ class TodoViewSet(viewsets.ModelViewSet):
             logging.info(f"Todo saved: {todo}")
         except Exception as e:
             logging.error(f"Couldn `t save the todo: {e}")
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        data = request.data
+
+        old_order = instance.order
+
+        if 'order' in data:
+            instance.order = data['order']
+
+        if 'column' in data:
+            column_id = data['column']
+            try:
+                instance.column = Column.objects.get(id=column_id)
+            except Column.DoesNotExist:
+                return Response({'error': 'Invalid Column Id'}, status=400)
+
+        instance.save(old_order=old_order)
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)

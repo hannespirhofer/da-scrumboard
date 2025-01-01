@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { lastValueFrom, Observable } from "rxjs";
+import { firstValueFrom, Observable } from "rxjs";
 import { BoardList } from "../interfaces/board-list";
 import { BoardDetail } from "../interfaces/board-detail";
+import { Todo } from "../interfaces/todo";
 
 @Injectable({
     providedIn: "root",
@@ -22,11 +23,17 @@ export class BoardDataService {
         return this.http.get<BoardDetail>(url);
     }
 
+    saveTodo(todo: Todo) {
+        const id = todo.id;
+        const url = this.url + "todos/" + id + "/";
+        return firstValueFrom(this.http.patch(url, todo));
+    }
+
     postBoard(boardName: string) {
         const url = this.url + "boards/";
         const body = {
             name: boardName,
         };
-        return lastValueFrom(this.http.post(url, body));
+        return firstValueFrom(this.http.post(url, body));
     }
 }
