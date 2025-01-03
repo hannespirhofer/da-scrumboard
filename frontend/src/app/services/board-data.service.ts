@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { firstValueFrom, Observable } from "rxjs";
 import { BoardList } from "../interfaces/board-list";
 import { BoardDetail } from "../interfaces/board-detail";
-import { Todo } from "../interfaces/todo";
+import { newTodo, Todo } from "../interfaces/todo";
 
 @Injectable({
     providedIn: "root",
@@ -23,7 +23,12 @@ export class BoardDataService {
         return this.http.get<BoardDetail>(url);
     }
 
-    saveTodo(todo: Todo) {
+    saveTodo(todo: newTodo) {
+        const url = this.url + "todos/";
+        return firstValueFrom(this.http.post(url, todo));
+    }
+
+    updateTodo(todo: Todo) {
         const id = todo.id;
         const url = this.url + "todos/" + id + "/";
         return firstValueFrom(this.http.patch(url, todo));

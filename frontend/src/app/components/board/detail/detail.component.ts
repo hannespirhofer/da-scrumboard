@@ -4,21 +4,21 @@ import { BoardList } from '../../../interfaces/board-list';
 import { BoardDetail, BoardDetailMock } from '../../../interfaces/board-detail';
 import { Subscription } from 'rxjs';
 import { BoardService } from '../../../services/board.service';
-import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { Todo } from '../../../interfaces/todo';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
 import { TodoComponent } from '../../todo/todo.component';
 import { NewBoardComponent } from '../new-board/new-board.component';
+import { RouteService } from '../../../shared/route.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-detail',
   standalone: true,
   imports: [
-    HeaderComponent,
-    RouterModule,
     RouterLink,
+    HeaderComponent,
     CommonModule,
     TodoComponent,
     ColumnComponent,
@@ -31,9 +31,7 @@ import { NewBoardComponent } from '../new-board/new-board.component';
 })
 export class DetailComponent {
 
-  isOwner: Boolean = false;
   currentProjectID: number | null = null;
-  isBoardSelected: boolean = false;
 
   userProjects: BoardList[] | null = null;
   selectedProject: BoardDetail = BoardDetailMock;
@@ -42,27 +40,22 @@ export class DetailComponent {
 
   constructor(
       private board: BoardService,
-      private route: ActivatedRoute //private auth: AuthService
+      private routeService: RouteService
   ) {}
 
   ngOnInit(): void {
-      this.subscribetoBoardList();
+    this.subscribeToRouteId();
+  }
 
-      // observe the url id and get the data once ready
-      this.subscriptions.push(
-          this.route.params.subscribe((p) => {
-              const idparam: string = p['id'];
-              const id: number = +idparam;
-
-              if (id && typeof id === "number") {
-                  this.isBoardSelected = true;
-                  this.currentProjectID = id;
-                  this.subscribetoBoardDetail(id);
-              } else {
-                  this.isBoardSelected = false;
-              }
-          })
-      );
+  subscribeToRouteId() {
+    // observe the url id and get the data once ready
+    this.subscriptions.push(
+        this.routeService.id$.subscribe((id) => {
+            if (id) {
+                this.subscribetoBoardDetail(id);
+            }
+        })
+    );
   }
 
   drop(event: CdkDragDrop<Todo[]>, column: any) {
@@ -124,17 +117,7 @@ export class DetailComponent {
   subscribetoBoardDetail(id: number) {
       this.subscriptions.push(
           this.board.getBoardDetail(id).subscribe(board => {
-              this.selectedProject = board;
-              console.log('Board Detail from /boards/:id is: ', board);
-          })
-      );
-  }
-
-  subscribetoBoardList() {
-      this.subscriptions.push(
-          this.board.getBoardList().subscribe(list => {
-              this.userProjects = list;
-              console.log('Board List from /boards/ is: ', list);
+            this.selectedProject = board;
           })
       );
   }
@@ -144,19 +127,11 @@ export class DetailComponent {
   }
 
   logInactiveSubscribers() {
-      console.log(this.subscriptions.filter(sub => !sub.closed));
-  }
-
-  getOwner() {
-      return this.isOwner;
-  }
-
-  setOwner(val: Boolean) {
-      this.isOwner = val;
+      console.log(this.subscriptions.filter(sub => sub.closed));
   }
 
   ngOnDestroy(): void {
-      this.subscriptions.forEach((sub, idx) => {
+      this.subscriptions.forEach((sub) => {
           sub.unsubscribe()
       });
   }

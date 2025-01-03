@@ -8,6 +8,13 @@ export interface Todo {
     order: number;
 }
 
+export interface newTodo {
+    title: string;
+    description: string;
+    column: number|null;
+    board: number;
+}
+
 export const TodoMock: Todo = {
     id: 1,
     title: "Mock Task",

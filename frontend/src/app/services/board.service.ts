@@ -21,7 +21,7 @@ export class BoardService {
     }
 
     saveItem(item: Todo) {
-        return this.data.saveTodo(item);
+        return this.data.updateTodo(item);
     }
 
     actionAfterLogin() {
