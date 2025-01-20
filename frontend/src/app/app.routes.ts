@@ -5,6 +5,7 @@ import { BoardComponent } from "./components/board/board.component";
 import { NewTodoComponent } from "./components/board/new-todo/new-todo.component";
 import { NewBoardComponent } from "./components/board/new-board/new-board.component";
 import { DetailComponent } from "./components/board/detail/detail.component";
+import { EditTodoComponent } from "./components/board/edit-todo/edit-todo.component";
 
 export const routes: Routes = [
     {
@@ -20,9 +21,10 @@ export const routes: Routes = [
         component: BoardComponent,
         children: [
             { path: "", redirectTo: "new", pathMatch: "full" },
-            { path: "new", component: NewBoardComponent },
-            { path: ":id", component: DetailComponent },
-            { path: ":id/new", component: NewTodoComponent }
+            { path: "new", component: NewBoardComponent }, // New Board
+            { path: ":id", component: DetailComponent }, // Detail Board
+            { path: ":id/new", component: NewTodoComponent }, // New Todo on Board -> restricted to Board
+            { path: ":id/edit/:todoId", component: EditTodoComponent }, // Edit Todo
         ],
     },
 ];

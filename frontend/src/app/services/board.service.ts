@@ -20,7 +20,7 @@ export class BoardService {
         return this.data.getBoardListData();
     }
 
-    saveItem(item: Todo) {
+    updateItem(item: Todo) {
         return this.data.updateTodo(item);
     }
 

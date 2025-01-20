@@ -59,29 +59,30 @@ export class DetailComponent {
   }
 
   drop(event: CdkDragDrop<Todo[]>, column: any) {
-      if (event.previousContainer === event.container) {
-          this.moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      } else {
-          this.transferArrayItem(
-              event.previousContainer.data,
-              event.container.data,
-              event.previousIndex,
-              event.currentIndex,
-          );
-      }
-      // Set the column on the item
-      const item = event.container.data[event.currentIndex];
-      item.column = column.id;
+    if (event.previousContainer === event.container && event.previousIndex === event.currentIndex) {
+        return;
+    }
 
-      //Item ready to save to db
-      this.saveItem(item);
+    if (event.previousContainer === event.container) {
+        this.moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+        this.transferArrayItem(
+            event.previousContainer.data,
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex,
+        );
+    }
+    // Set the column on the item
+    const item = event.container.data[event.currentIndex];
+    item.column = column.id;
+
+    //Item ready to save to db
+    this.saveItem(item);
   }
 
-  saveItem(item: Todo) {
-      this.board.saveItem(item)
-          .then((msg: any) => {
-              console.log('Todo saved. ', msg);
-          })
+  saveItem(todo: Todo) {
+      this.board.updateItem(todo);
   }
 
   moveItemInArray(array: Todo[], fromIndex: number, toIndex: number) {

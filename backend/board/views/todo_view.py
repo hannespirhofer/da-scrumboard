@@ -58,3 +58,10 @@ class TodoViewSet(viewsets.ModelViewSet):
         instance.save(old_order=old_order)
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data = request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)

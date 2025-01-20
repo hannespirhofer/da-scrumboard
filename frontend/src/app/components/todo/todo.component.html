@@ -4,7 +4,8 @@
   [class.hovered]="hoveredCard === todo.id"
   >
     <div class="card-body">
-      <h5 class="card-title">[{{todo.id}}] {{ todo.title }}</h5>
+      <h5 class="card-title">{{ todo.title }}</h5>
       <p class="card-text">{{ todo.description }}</p>
+      <a (click)="onEditTodo(todo)" class="card-link">Edit</a>
     </div>
 </div>

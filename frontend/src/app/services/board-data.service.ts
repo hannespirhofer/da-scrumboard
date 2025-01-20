@@ -28,6 +28,16 @@ export class BoardDataService {
         return firstValueFrom(this.http.post(url, todo));
     }
 
+    editTodo(todo: newTodo, id: number) {
+        const url = this.url + "todos/" + id + "/";
+        return firstValueFrom(this.http.patch(url, todo));
+    }
+
+    deleteTodo(id: number) {
+        const url = this.url + "todos/" + id + "/";
+        return firstValueFrom(this.http.delete(url));
+    }
+
     updateTodo(todo: Todo) {
         const id = todo.id;
         const url = this.url + "todos/" + id + "/";

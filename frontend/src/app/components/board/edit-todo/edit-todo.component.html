@@ -1,0 +1,36 @@
+@if(todo) {
+
+<h2>Edit Todo</h2>
+
+<form [formGroup]="todoForm" (ngSubmit)="onTodoEdit()" class="p-3">
+    <div class="mb-3">
+      <label for="board" class="form-label">Board Id:</label>
+      <input id="board" type="number" class="form-control" formControlName="board">
+    </div>
+
+    <div class="mb-3">
+      <label for="column" class="form-label">Column:</label>
+      <select id="column" class="form-select" formControlName="column">
+        @for (column of columns; track column.value) {
+            <option [ngValue]="column.value">{{ column.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="title" class="form-label">Title:</label>
+      <input id="title" type="text" class="form-control" formControlName="title">
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <textarea id="description" rows="3" class="form-control" formControlName="description"></textarea>
+    </div>
+
+    <div class="gap-24">
+        <button type="submit" class="btn btn-primary" [disabled]="!todoForm.valid">Submit</button>
+        <button type="button" (click)="onTodoDelete()" class="btn btn-danger">Delete</button>
+    </div>
+  </form>
+
+}
