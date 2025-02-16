@@ -37,7 +37,7 @@ export class RegisterComponent {
                 [Validators.required, Validators.minLength(4)],
             ],
         },
-        { validators: PasswordMatchValidator("password", "confirmPassword") }
+        { validators: PasswordMatchValidator() }
     );
 
     private mapFormValues(values: any) {
@@ -72,6 +72,7 @@ export class RegisterComponent {
             this.registerForm.reset();
             this.router.navigateByUrl("/login");
         } catch (error) {
+            this.registerForm.setErrors({otherError: true});
             console.error("An error happened: ", error);
         }
     }

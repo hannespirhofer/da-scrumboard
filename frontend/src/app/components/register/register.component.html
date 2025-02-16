@@ -112,11 +112,10 @@
             Passwords do not match.
         </small>
 
-        <div class="checkbox mb-3 d-none">
-            <label>
-                <input type="checkbox" value="remember-me" /> Remember me
-            </label>
-        </div>
+        <small *ngIf="submitted && registerForm.errors?.['otherError']" class="text-danger d-block">
+            Another error came up.
+        </small>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">
             Sign Up
         </button>
