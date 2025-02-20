@@ -112,8 +112,12 @@
             Passwords do not match.
         </small>
 
-        <small *ngIf="submitted && registerForm.errors?.['otherError']" class="text-danger d-block">
-            Another error came up.
+        <small *ngIf="submitted && registerForm.errors?.['backendError']" class="text-danger d-block">
+            @if (backendErrors) {
+                @for (error of backendErrors; track error) {
+                    {{error}}
+                }
+            }
         </small>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">

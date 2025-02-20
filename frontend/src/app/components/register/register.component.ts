@@ -24,6 +24,8 @@ export class RegisterComponent {
         private snack: SnackService
     ) {}
 
+    backendErrors: string[] = [];
+
     registerForm = this.formBuilder.group(
         {
             firstname: ["", Validators.minLength(3)],
@@ -60,20 +62,33 @@ export class RegisterComponent {
         }
     }
 
-    async registerUser(data: any) {
-        try {
-            let resp = await this.auth.register(data);
-            this.snack.show(
-                "Register successful.",
-                "You will be redirected to the login page.",
-                3500
-            );
-            this.submitted = false;
-            this.registerForm.reset();
-            this.router.navigateByUrl("/login");
-        } catch (error) {
-            this.registerForm.setErrors({otherError: true});
-            console.error("An error happened: ", error);
+    registerUser(data: any) {
+        this.auth.register(data).subscribe({
+            next: () => {
+                this.snack.show(
+                    "Register successful.",
+                    "You will be redirected to the login page.",
+                    3500
+                );
+                this.submitted = false;
+                this.registerForm.reset();
+                this.router.navigateByUrl("/login");
+            },
+            error: error => {
+                this.handleBackendError(error);
+            }
+        })
+    }
+
+    handleBackendError(httperror: any) {
+        this.backendErrors = []
+        const errobj = httperror.error;
+        this.registerForm.setErrors({backendError: true});
+        for (const key in errobj) {
+            errobj[key].forEach((msg: string) => {
+                const m = `${key}: ${msg}`;
+                this.backendErrors.push(m);
+            });
         }
     }
 }

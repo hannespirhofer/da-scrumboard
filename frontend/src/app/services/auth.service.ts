@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { lastValueFrom } from "rxjs";
+import { firstValueFrom, lastValueFrom, Observable } from "rxjs";
 import { User } from "../interfaces/user";
 
 @Injectable({
@@ -13,9 +13,9 @@ export class AuthService {
 
     url = "http://127.0.0.1:8000/api/";
 
-    register(payload: any) {
+    register(payload: any): Observable<any> {
         const url = this.url + "register/";
-        return lastValueFrom(this.http.post(url, payload));
+        return this.http.post(url, payload);
     }
 
     login(payload: any) {
