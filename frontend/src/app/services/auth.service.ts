@@ -7,11 +7,26 @@ import { User } from "../interfaces/user";
     providedIn: "root",
 })
 export class AuthService {
+    private username: string|null = null;
+    private email: string|null = null;
+
     constructor(private http: HttpClient) {}
 
     currentUser: any | null = null;
 
     url = "http://127.0.0.1:8000/api/";
+
+    setUserData(username: string, email: string) {
+        this.username = username;
+        this.email = email;
+    }
+
+    getUserData() {
+        return {
+            "username": this.username,
+            "email": this.email
+        }
+    }
 
     register(payload: any): Observable<any> {
         const url = this.url + "register/";

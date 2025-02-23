@@ -5,6 +5,13 @@
   box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+}
+
 .navbar-brand {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;

@@ -1,0 +1,35 @@
+<h2>Edit Board</h2>
+
+@if (board) {
+    <form [formGroup]="boardForm" (ngSubmit)="onBoardSubmit()" class="p-3">
+        <div class="mb-3">
+            <label for="board" class="form-label">Board Id:</label>
+            <input id="board" type="number" class="form-control" formControlName="board">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Add Members</label>
+            <div style="display: flex; gap: 48px;">
+                <select id="members" class="form-select" style="width: 50%;">
+                    @for (user of users; track user.id) {
+                        <option [ngValue]="user.id">{{user.username}}</option>
+                    }
+                </select>
+                <button (click)="addUser()" class="btn btn-primary">Add User</button>
+            </div>
+        </div>
+
+        <div class="members mb-3">
+                @for (member of board.members; track member.id) {
+                    <div class="member" (click)="removeUser(member.id)">{{member.username}}</div>
+                }
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Title:</label>
+            <input id="name" type="text" class="form-control" formControlName="name">
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!boardForm.valid">Send</button>
+  </form>
+}

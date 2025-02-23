@@ -1,3 +1,4 @@
+from multiprocessing import context
 from rest_framework import serializers
 
 from .todo_serializer import TodoSerializer
@@ -16,9 +17,10 @@ class ColumnSerializer(serializers.ModelSerializer):
 
     def get_todos(self, obj):
         board_id = self.context.get("board_id")
+        request = self.context.get("request")
         if board_id:
             todos = obj.todos.filter(board_id = board_id).order_by('order')
-            return TodoSerializer(todos, many = True).data
+            return TodoSerializer(todos, many = True, context={"request": request}).data
         return []
 
     class Meta:

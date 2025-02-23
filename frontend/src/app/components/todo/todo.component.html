@@ -1,11 +1,17 @@
-<div class="todo card"
-  (mouseenter)="hoveredCard = todo.id;"
-  (mouseleave)="hoveredCard = null;"
-  [class.hovered]="hoveredCard === todo.id"
-  >
-    <div class="card-body">
-      <h5 class="card-title">{{ todo.title }}</h5>
-      <p class="card-text">{{ todo.description }}</p>
-      <a (click)="onEditTodo(todo)" class="card-link">Edit</a>
-    </div>
-</div>
+@if(todo) {
+  <div class="todo card"
+    (mouseenter)="hoveredCard = todo.id;"
+    (mouseleave)="hoveredCard = null;"
+    [class.hovered]="hoveredCard === todo.id"
+    >
+      <div class="card-body">
+        <h5 class="card-title">{{ todo.title }}</h5>
+        <p class="card-text">{{ todo.description }}</p>
+
+        @if(todo && todo.is_owner) {
+          <a (click)="onEditTodo(todo)" class="card-link">Edit</a>
+        }
+
+      </div>
+  </div>
+}

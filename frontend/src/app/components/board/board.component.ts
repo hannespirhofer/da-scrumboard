@@ -13,6 +13,7 @@ import {
 import { ColumnComponent } from "./column/column.component";
 import { NewBoardComponent } from "./new-board/new-board.component";
 import { RouteService } from "../../shared/route.service";
+import { DataService } from "../../services/shared/data.service";
 
 @Component({
     selector: "app-board",
@@ -39,12 +40,14 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     constructor(
         private board: BoardService,
-        private routeService: RouteService
+        private routeService: RouteService,
+        private data: DataService
     ) {}
 
     ngOnInit(): void {
         // Load the boards list
-        this.subscribetoBoardList();
+        // this.setBoardList();
+        this.setBoardList();
         this.subscribeToRouteId();
     }
 
@@ -56,11 +59,16 @@ export class BoardComponent implements OnInit, OnDestroy {
         );
     }
 
-    subscribetoBoardList() {
+    setBoardList() {
+        if (this.data.boardlist) {
+            this.userProjects = this.data.boardlist;
+            return;
+        }
         this.subscriptions.push(
-            this.board.getBoardList().subscribe(list => {
-                this.userProjects = list;
-                // console.log('Board List from /boards/ is: ', list);
+            this.board.getBoardList().subscribe({
+                next: (list) => {
+                    this.userProjects = list
+                }
             })
         );
     }

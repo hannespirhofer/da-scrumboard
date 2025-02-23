@@ -33,7 +33,7 @@ export class LoginComponent {
     async onSubmit() {
         this.submitted = true;
         try {
-            const resp: any = await this.auth.login(this.loginForm.value);
+            const resp = await this.auth.login(this.loginForm.value);
             this.onLoginSuccess(resp);
         } catch (error: any) {
             this.onLoginFailed(error);
@@ -41,6 +41,7 @@ export class LoginComponent {
     }
 
     async onLoginSuccess(resp: any) {
+        this.setUsername(resp)
         this.auth.currentUser = resp;
         this.snack.show(
             "Login successful.",
@@ -52,6 +53,15 @@ export class LoginComponent {
         this.loginForm.reset();
         await delay(1000);
         this.board.actionAfterLogin();
+    }
+
+    setUsername(resp: any) {
+        const username = resp["username"];
+        const email = resp["email"];
+        if (username && email) {
+            this.auth.setUserData(username, email);
+            localStorage.setItem("username", username);
+        }
     }
 
     onLoginFailed(error: any) {

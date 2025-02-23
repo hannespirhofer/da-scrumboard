@@ -13,6 +13,7 @@ class BoardSerializer(serializers.ModelSerializer):
     Renders the columns by the ColumnSerializer inside the board
     -> It adds the owner, members, columns data to the Board Serializer
     """
+    is_owner = serializers.SerializerMethodField()
 
     class Meta:
         model = Board
@@ -22,10 +23,19 @@ class BoardSerializer(serializers.ModelSerializer):
     members = UserSerializer(many=True)
     columns = serializers.SerializerMethodField()
 
+    def get_is_owner(self, obj):
+        request = self.context.get("request")
+        user = request.user
+        return user == obj.owner
+
     # SerilizerMethodField checks for get_name method inside Class
     def get_columns(self, obj):
         columns = Column.objects.all()
-        serializer_context = {"board_id": obj.id}
+        request = self.context.get("request")
+        serializer_context = {
+            "board_id": obj.id,
+            "request": request
+            }
         return ColumnSerializer(columns, many=True, context=serializer_context).data
 
 

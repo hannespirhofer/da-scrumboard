@@ -1,0 +1,32 @@
+.members {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.member {
+    border-radius: 6px;
+    padding: 6px 16px;
+
+    &:after {
+        content: "x";
+        color: lightgray;
+        font-weight: bolder;
+        padding-left: 8px;
+    }
+
+
+    &:hover {
+        cursor: pointer;
+        background-color: lightgray;
+        margin-right: 0;
+
+        &:after {
+            content: "x";
+            color: red;
+            font-weight: bolder;
+            padding-left: 8px;
+        }
+    }
+
+}

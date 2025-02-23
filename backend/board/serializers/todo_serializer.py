@@ -7,8 +7,8 @@ class TodoSerializer(serializers.ModelSerializer):
     """
     Serializer For Todos
 
-    Renders the todos inside the columns
     """
+    is_owner = serializers.SerializerMethodField()
 
     class Meta:
         model = Todo
@@ -16,3 +16,7 @@ class TodoSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'author': {'required': False},
             'order': {'required': False}}
+
+    def get_is_owner(self, obj):
+        request = self.context.get('request')
+        return request.user == obj.author

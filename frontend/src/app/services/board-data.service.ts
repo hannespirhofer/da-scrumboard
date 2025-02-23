@@ -4,6 +4,7 @@ import { firstValueFrom, Observable } from "rxjs";
 import { BoardList } from "../interfaces/board-list";
 import { BoardDetail } from "../interfaces/board-detail";
 import { newTodo, Todo } from "../interfaces/todo";
+import { User } from "../interfaces/user";
 
 @Injectable({
     providedIn: "root",
@@ -12,6 +13,11 @@ export class BoardDataService {
     url = "http://127.0.0.1:8000/api/";
 
     constructor(private http: HttpClient) {}
+
+    getActiveUsers(): Observable<User[]> {
+        const url = this.url + "members/";
+        return this.http.get<User[]>(url);
+    }
 
     getBoardListData(): Observable<BoardList[]> {
         const url = this.url + "boards/";

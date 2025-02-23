@@ -6,6 +6,7 @@ export interface Todo {
     completed: boolean;
     author: number|null;
     order: number;
+    is_owner: boolean;
 }
 
 export interface newTodo {
@@ -23,4 +24,5 @@ export const TodoMock: Todo = {
     completed: false,
     author: 1,
     order: 0,
+    is_owner: false
 };

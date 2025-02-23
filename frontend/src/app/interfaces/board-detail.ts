@@ -7,6 +7,7 @@ export interface BoardDetail {
     members: User[];
     columns: Column[];
     name: string;
+    is_owner: Boolean;
 }
 
 export const BoardDetailMock: BoardDetail = {
@@ -14,7 +15,8 @@ export const BoardDetailMock: BoardDetail = {
     owner: UserMock,
     members: [UserMock],
     columns: [ColumnMock],
-    name: "Mock Project Board"
+    name: "Mock Project Board",
+    is_owner: false
 };
 
 export const BoardExtended: BoardDetail = {
@@ -47,6 +49,7 @@ export const BoardExtended: BoardDetail = {
                     completed: false,
                     author: 1,
                     order: 0,
+                    is_owner: false
                 },
                 {
                     id: 2,
@@ -56,6 +59,7 @@ export const BoardExtended: BoardDetail = {
                     completed: false,
                     author: 1,
                     order: 1,
+                    is_owner: false
                 },
                 {
                     id: 3,
@@ -65,6 +69,7 @@ export const BoardExtended: BoardDetail = {
                     completed: false,
                     author: 1,
                     order: 2,
+                    is_owner: false
                 },
             ],
         },
@@ -81,6 +86,7 @@ export const BoardExtended: BoardDetail = {
                     completed: false,
                     author: 1,
                     order: 0,
+                    is_owner: false
                 },
             ],
         },
@@ -98,4 +104,5 @@ export const BoardExtended: BoardDetail = {
         },
     ],
     name: "Django Board",
+    is_owner: false
 };

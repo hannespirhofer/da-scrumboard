@@ -5,6 +5,7 @@ from board.serializers.todo_serializer import TodoSerializer
 from rest_framework import permissions, viewsets
 from rest_framework.authentication import (
     TokenAuthentication,
+    BasicAuthentication
 )
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
@@ -20,14 +21,15 @@ class TodoViewSet(viewsets.ModelViewSet):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     authentication_classes = [
-        TokenAuthentication,
+        TokenAuthentication
     ]
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         if self.request.method == "GET":
+            pass
             # Block this resource
-            raise PermissionDenied("GET method is not allowed on this endpoint.")
+            # raise PermissionDenied("GET method is not allowed on this endpoint.")
 
         # Set the default queryset, defined above -> use method instead prop for cached results
         return super().get_queryset()

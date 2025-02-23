@@ -29,7 +29,9 @@
 
     <div class="gap-24">
         <button type="submit" class="btn btn-primary" [disabled]="!todoForm.valid">Submit</button>
-        <button type="button" (click)="onTodoDelete()" class="btn btn-danger">Delete</button>
+        @if(todo && todo.is_owner) {
+          <button type="button" (click)="onTodoDelete()" class="btn btn-danger">Delete</button>
+        }
     </div>
   </form>
 

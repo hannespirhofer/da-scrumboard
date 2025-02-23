@@ -1,8 +1,12 @@
 import { Injectable } from "@angular/core";
-import { BoardDataService } from "./board-data.service";
 import { Router } from "@angular/router";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, Observable, take } from "rxjs";
+
 import { Todo } from "../interfaces/todo";
+import { BoardDataService } from "./board-data.service";
+import { BoardDetail } from "../interfaces/board-detail";
+import { DataService } from "./shared/data.service";
+import { BoardList } from "../interfaces/board-list";
 
 @Injectable({
     providedIn: "root",
@@ -10,15 +14,51 @@ import { Todo } from "../interfaces/todo";
 export class BoardService {
     constructor(
         private data: BoardDataService,
-        private router: Router) {}
+        private router: Router,
+        private boarddata: DataService,
+    ) {}
 
     getBoardDetail(boardid: number) {
-        return this.data.getBoardData(boardid);
+        const res = this.data.getBoardData(boardid);
+        this.validateRequestAndSave(res);
+        return res;
     }
 
     getBoardList() {
-        return this.data.getBoardListData();
+        const res = this.data.getBoardListData();
+        this.validateRequestAndSave(res);
+        return res;
     }
+
+    /**
+     *
+     * @param res Http Observable
+     */
+    validateRequestAndSave(res: Observable<BoardDetail|BoardList[]>) {
+        res.subscribe({
+            next: (data) => {
+                if (this.isBoardDetail(data)) {
+                    this.boarddata.board = data as BoardDetail;
+                } else {
+                    this.boarddata.boardlist = data as BoardList[];
+                }
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        });
+    }
+
+    /**
+     * Checks if the data is of Type BoardList or BoardDetail.
+     * @param data request response object.
+     * @returns boolen if is_owner is set
+     */
+    isBoardDetail(data: any): Boolean {
+        return data.is_owner ? true : false;
+    }
+
+
 
     updateItem(item: Todo) {
         return this.data.updateTodo(item);

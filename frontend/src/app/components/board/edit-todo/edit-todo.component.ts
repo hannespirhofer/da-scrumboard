@@ -4,7 +4,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { BoardDataService } from '../../../services/board-data.service';
 import { SnackService } from '../../../services/snack.service';
-import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-edit-todo',
@@ -29,6 +28,7 @@ export class EditTodoComponent implements OnInit {
 
       if (stateTodo) {
         this.todo = stateTodo;
+
         this.todoForm.patchValue({
           column: stateTodo.column,
           title: stateTodo.title,

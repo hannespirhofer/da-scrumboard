@@ -6,14 +6,13 @@
         <div class="btn-toolbar mb-2 mb-md-0" role="toolbar">
             <div class="btn-group mr-2">
 
-                <a routerLink="new" class="btn btn-sm btn-outline-secondary">
-                    Add Todo
+                <a [routerLink]="['new']" class="add-todo btn ">
+                    &#43;
                 </a>
 
             </div>
 
-            <!-- Not in use - Board Owner edit fields-->
-            @if(true) {
+            @if(project.is_owner) {
                 <div class="dropdown btn-group mr-2">
                     <button
                         class="btn btn-outline-secondary dropdown-toggle"
@@ -29,7 +28,7 @@
                         class="dropdown-menu"
                         aria-labelledby="dropdownMenuButton"
                     >
-                        <a class="dropdown-item" routerLink="#"
+                        <a class="dropdown-item" [routerLink]="['edit']"
                             >Edit Project Details</a
                         >
                         <a

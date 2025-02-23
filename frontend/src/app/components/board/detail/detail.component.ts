@@ -116,11 +116,11 @@ export class DetailComponent {
   }
 
   subscribetoBoardDetail(id: number) {
-      this.subscriptions.push(
-          this.board.getBoardDetail(id).subscribe(board => {
-            this.selectedProject = board;
-          })
-      );
+    this.subscriptions.push(
+        this.board.getBoardDetail(id).subscribe(board => {
+        this.selectedProject = board;
+        })
+    );
   }
 
   logActiveSubscribers() {
