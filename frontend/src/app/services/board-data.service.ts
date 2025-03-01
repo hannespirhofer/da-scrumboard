@@ -57,4 +57,14 @@ export class BoardDataService {
         };
         return firstValueFrom(this.http.post(url, body));
     }
+
+    putBoard(board: BoardDetail|any, id: number) {
+        const url = this.url + "boards/" + id + '/';
+        return firstValueFrom(this.http.put(url, board));
+    }
+
+    deleteBoard(boardid: number) {
+        const url = this.url + "boards/" + boardid + '/';
+        return firstValueFrom(this.http.delete(url));
+    }
 }

@@ -17,7 +17,10 @@
 
     <div class="mb-3">
       <label for="title" class="form-label">Title:</label>
-      <input id="title" type="text" class="form-control" formControlName="title">
+      <input id="title" type="text" class="form-control" [class.wrong]="isTitleInvalid()" formControlName="title">
+      @if(isTitleInvalid()) {
+        <span class="error">The title must be at least 5 characters long.</span>
+      }
     </div>
 
     <div class="mb-3">

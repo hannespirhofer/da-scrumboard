@@ -28,6 +28,9 @@ export class NewTodoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToRouteId();
+    this.todoForm.valueChanges.subscribe(() => {
+        console.log(this.todoForm);
+    })
   }
 
   subscribeToRouteId() {
@@ -58,6 +61,10 @@ export class NewTodoComponent implements OnInit, OnDestroy {
     { value: 2, label: 'Doing'},
     { value: 3, label: 'Done'}
   ];
+
+  isTitleInvalid() {
+    return this.todoForm.get('title')?.invalid && !this.todoForm.get('title')?.pristine;
+  }
 
   onTodoSubmit() {
     const vals = this.todoForm.getRawValue() as newTodo;

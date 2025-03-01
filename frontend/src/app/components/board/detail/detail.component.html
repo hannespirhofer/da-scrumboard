@@ -1,3 +1,4 @@
+@defer {
 <!-- Main Board Area - on loaded Board -->
 <ng-container *ngIf="selectedProject as project">
     <!-- Board Detail Header -->
@@ -33,7 +34,7 @@
                         >
                         <a
                             class="dropdown-item link-danger"
-                            routerLink="#"
+                            (click)="deleteProject(project.id)"
                         >
                             Delete project
                         </a>
@@ -69,3 +70,6 @@
     </div>
     <!-- Main Container End -->
 </ng-container>
+} @loading (after 100ms; minimum 3s) {
+    Its loading .....
+}

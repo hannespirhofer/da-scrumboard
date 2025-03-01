@@ -8,4 +8,13 @@ form {
     >button {
         flex: 0 0 33%;
     }
+
+    .form-control.wrong {
+        border: 2px solid red;
+    }
+
+    .error {
+        font-size: 10px;
+        color: red;
+    }
 }

@@ -18,9 +18,12 @@
     </div>
 
     <div class="mb-3">
-      <label for="title" class="form-label">Title:</label>
-      <input id="title" type="text" class="form-control" formControlName="title">
-    </div>
+        <label for="title" class="form-label">Title:</label>
+        <input id="title" type="text" class="form-control" [class.wrong]="isTitleInvalid()" formControlName="title">
+        @if(isTitleInvalid()) {
+          <span class="error">The title must be at least 5 characters long.</span>
+        }
+      </div>
 
     <div class="mb-3">
       <label for="description" class="form-label">Description:</label>
@@ -28,7 +31,7 @@
     </div>
 
     <div class="gap-24">
-        <button type="submit" class="btn btn-primary" [disabled]="!todoForm.valid">Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!todoForm.valid || !todoForm.dirty">Submit</button>
         @if(todo && todo.is_owner) {
           <button type="button" (click)="onTodoDelete()" class="btn btn-danger">Delete</button>
         }

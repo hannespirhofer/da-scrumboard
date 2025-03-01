@@ -4,18 +4,18 @@
     <form [formGroup]="boardForm" (ngSubmit)="onBoardSubmit()" class="p-3">
         <div class="mb-3">
             <label for="board" class="form-label">Board Id:</label>
-            <input id="board" type="number" class="form-control" formControlName="board">
+            <input id="board" type="number" class="form-control" formControlName="boardid">
         </div>
 
         <div class="mb-3">
             <label class="form-label">Add Members</label>
             <div style="display: flex; gap: 48px;">
-                <select id="members" class="form-select" style="width: 50%;">
+                <select id="members" class="form-select" formControlName="members" style="width: 50%;">
                     @for (user of users; track user.id) {
                         <option [ngValue]="user.id">{{user.username}}</option>
                     }
                 </select>
-                <button (click)="addUser()" class="btn btn-primary">Add User</button>
+                <button type="button" (click)="addUser()" class="btn btn-primary" [disabled]="boardForm.get('members')?.value == ''">Add User</button>
             </div>
         </div>
 
@@ -28,8 +28,11 @@
         <div class="mb-3">
             <label for="name" class="form-label">Title:</label>
             <input id="name" type="text" class="form-control" formControlName="name">
+            @if(!boardForm.get("name")?.valid) {
+                <span class="error">The title must be at least 5 characters long.</span>
+              }
         </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="!boardForm.valid">Send</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSubmitDisabled()">Send</button>
   </form>
 }

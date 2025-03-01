@@ -1,8 +1,11 @@
 from rest_framework import serializers
+
+from board.serializers.column_serializer import ColumnSerializer
+from board.serializers.member_serializer import MemberSerializer
 from board.models import Board, Column
 
-from board.serializers.user_serializer import UserSerializer
-from board.serializers.column_serializer import ColumnSerializer
+from django.contrib.auth.models import User
+
 
 
 # Part of the Board Serializer to serialize User Data
@@ -19,8 +22,8 @@ class BoardSerializer(serializers.ModelSerializer):
         model = Board
         fields = "__all__"
 
-    owner = UserSerializer()
-    members = UserSerializer(many=True)
+    owner = MemberSerializer()
+    members = MemberSerializer(many=True)
     columns = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
@@ -54,3 +57,11 @@ class BoardsSerializer(serializers.ModelSerializer):
             "owner",
             "members",
         )
+
+class BoardUpdateSerializer(serializers.ModelSerializer):
+    owner = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    members = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
+
+    class Meta:
+        model = Board
+        fields = ["name", "owner", "members"]

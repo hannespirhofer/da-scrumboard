@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ColumnComponent } from '../column/column.component';
 import { BoardList } from '../../../interfaces/board-list';
-import { BoardDetail, BoardDetailMock } from '../../../interfaces/board-detail';
+import { BoardDetail } from '../../../interfaces/board-detail';
 import { Subscription } from 'rxjs';
 import { BoardService } from '../../../services/board.service';
 import { CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
@@ -12,6 +12,9 @@ import { TodoComponent } from '../../todo/todo.component';
 import { NewBoardComponent } from '../new-board/new-board.component';
 import { RouteService } from '../../../shared/route.service';
 import { RouterLink } from '@angular/router';
+import { BoardDataService } from '../../../services/board-data.service';
+import { UtilService } from '../../../services/util.service';
+import { SnackService } from '../../../services/snack.service';
 
 @Component({
   selector: 'app-detail',
@@ -34,13 +37,16 @@ export class DetailComponent {
   currentProjectID: number | null = null;
 
   userProjects: BoardList[] | null = null;
-  selectedProject: BoardDetail = BoardDetailMock;
+  selectedProject: BoardDetail|null = null;
 
   subscriptions: Subscription[] = [];
 
   constructor(
       private board: BoardService,
-      private routeService: RouteService
+      private routeService: RouteService,
+      private bds: BoardDataService,
+      private util: UtilService,
+      private snack: SnackService
   ) {}
 
   ngOnInit(): void {
@@ -83,6 +89,16 @@ export class DetailComponent {
 
   saveItem(todo: Todo) {
       this.board.updateItem(todo);
+  }
+
+  async deleteProject(id: number) {
+    try {
+        await this.bds.deleteBoard(id);
+        await this.snack.show('Board deleted! &#128683;', 'Hope you\' ll make a new one soon.', 1600);
+        this.util.loadBoardOrNew();
+    } catch (e) {
+        console.warn('Error: ', e);
+    }
   }
 
   moveItemInArray(array: Todo[], fromIndex: number, toIndex: number) {

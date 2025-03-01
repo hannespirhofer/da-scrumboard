@@ -7,11 +7,13 @@ import { BoardDataService } from "./board-data.service";
 import { BoardDetail } from "../interfaces/board-detail";
 import { DataService } from "./shared/data.service";
 import { BoardList } from "../interfaces/board-list";
+import { User } from "../interfaces/user";
 
 @Injectable({
     providedIn: "root",
 })
 export class BoardService {
+
     constructor(
         private data: BoardDataService,
         private router: Router,
@@ -21,6 +23,11 @@ export class BoardService {
     getBoardDetail(boardid: number) {
         const res = this.data.getBoardData(boardid);
         this.validateRequestAndSave(res);
+        return res;
+    }
+
+    setBoardDetail(board: BoardDetail|any, id: number) {
+        const res = this.data.putBoard(board, id);
         return res;
     }
 
@@ -38,9 +45,9 @@ export class BoardService {
         res.subscribe({
             next: (data) => {
                 if (this.isBoardDetail(data)) {
-                    this.boarddata.board = data as BoardDetail;
+                    this.boarddata.setBoard(data);
                 } else {
-                    this.boarddata.boardlist = data as BoardList[];
+                    this.boarddata.setBoardList(data);
                 }
             },
             error: (err) => {
@@ -54,11 +61,9 @@ export class BoardService {
      * @param data request response object.
      * @returns boolen if is_owner is set
      */
-    isBoardDetail(data: any): Boolean {
-        return data.is_owner ? true : false;
+    isBoardDetail(data: BoardDetail|BoardList[]): data is BoardDetail {
+        return (data as BoardDetail).is_owner !== undefined;
     }
-
-
 
     updateItem(item: Todo) {
         return this.data.updateTodo(item);

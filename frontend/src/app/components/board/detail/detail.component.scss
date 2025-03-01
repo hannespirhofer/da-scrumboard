@@ -1,4 +1,17 @@
 .add-todo {
-    font-size: 29px;
-    line-height: 29px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid #333;
+    color: #333;
+
+    &:after {
+        content: 'Add Todo';
+        font-size: 15px;
+        line-height: 15px;
+        font-weight: normal;
+    }
+}
+
+.dropdown-item:hover {
+    cursor: pointer;
 }

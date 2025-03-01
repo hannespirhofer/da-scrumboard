@@ -1,9 +1,11 @@
+from django.shortcuts import get_object_or_404
 from board.models import Board
 from django.db.models import Q
 
-from board.serializers.board_serializer import BoardSerializer, BoardsSerializer
+from board.serializers.board_serializer import BoardSerializer, BoardUpdateSerializer, BoardsSerializer
 
 from rest_framework import permissions, viewsets
+from rest_framework.response import Response
 from rest_framework.authentication import (
     TokenAuthentication,
 )
@@ -41,10 +43,16 @@ class BoardViewset(viewsets.ModelViewSet):
     """
 
     def get_serializer_class(self):
+        # List boards (for the sidebar)
+        if self.action == "list":
+            return BoardsSerializer
         # For a single item accessed by /boards/:id
         if self.action == "retrieve":
             return BoardSerializer
-        # For list items - action list accessed on /boards/
+        # For a single item Put or patch request by /boards/:id
+        if self.action in ["update", "partial_update"]:
+            return BoardUpdateSerializer
+        # default
         return BoardsSerializer
 
     """
@@ -55,3 +63,14 @@ class BoardViewset(viewsets.ModelViewSet):
         board = serializer.save(owner=self.request.user)
         board.members.add(self.request.user)
         board.save()
+
+    def update(self, request, *args, **kwargs):
+        pk = kwargs.get("pk")
+        instance = get_object_or_404(Board, id=pk)
+        serializer_class = self.get_serializer_class()
+        serializer = serializer_class(instance, data=request.data, partial=False)
+
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        return Response(serializer.data)

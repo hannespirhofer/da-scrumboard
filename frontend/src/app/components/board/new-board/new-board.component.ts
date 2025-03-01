@@ -3,6 +3,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { BoardDataService } from "../../../services/board-data.service";
 import { SnackService } from "../../../services/snack.service";
 import { Router } from "@angular/router";
+import { UtilService } from "../../../services/util.service";
+import { setThrowInvalidWriteToSignalError } from "@angular/core/primitives/signals";
 
 @Component({
     selector: "app-new-board",
@@ -16,7 +18,8 @@ export class NewBoardComponent {
         private formBuilder: FormBuilder,
         private boardDataService: BoardDataService,
         private snack: SnackService,
-        private router: Router
+        private router: Router,
+        private util: UtilService
     ) {}
 
     newBoardForm = this.formBuilder.group({
@@ -34,8 +37,8 @@ export class NewBoardComponent {
                 "You will be redirected to board page.",
                 1800
             );
-            // TODO Update the left sidebar
-            this.router.navigate(["board", boardId]);
+            await this.router.navigate(["board", boardId]);
+            this.util.refresh();
         }
     }
 }

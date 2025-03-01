@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
 export class SnackService {
     constructor() {}
 
-    show(title: string, text: string, duration: number = 6000, type?: string): Promise<void> {
+    show(title: string, text: string, duration: number = 2000, type?: string): Promise<void> {
         return new Promise((resolve) => {
             const snackContainer = document.createElement("div");
             snackContainer.className = `custom-snackbar`;

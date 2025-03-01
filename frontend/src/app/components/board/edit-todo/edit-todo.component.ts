@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { BoardDataService } from '../../../services/board-data.service';
 import { SnackService } from '../../../services/snack.service';
+import { UtilService } from '../../../services/util.service';
 
 @Component({
   selector: 'app-edit-todo',
@@ -18,7 +19,8 @@ export class EditTodoComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dataService: BoardDataService,
-    private snack: SnackService
+    private snack: SnackService,
+    private util: UtilService
   ) {}
 
   public todo: Todo | null = null;
@@ -55,10 +57,15 @@ export class EditTodoComponent implements OnInit {
     { value: 3, label: 'Done'}
   ];
 
+  isTitleInvalid() {
+    return this.todoForm.get('title')?.invalid && !this.todoForm.get('title')?.pristine;
+  }
+
   onTodoEdit() {
+    if (!this.todoForm.dirty) return;
+
     const vals = this.todoForm.getRawValue() as newTodo;
     const todoId = Number(this.activatedRoute.snapshot.paramMap.getAll('todoId'));
-    console.log(vals, todoId);
 
     this.dataService.editTodo(vals, todoId).then((res) => {
       this.snack.show('Todo saved!', 'Redirecting now.', 1500).then(() => {

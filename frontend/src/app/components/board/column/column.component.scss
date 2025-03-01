@@ -1,3 +1,9 @@
 .todo-item {
     display: block;
 }
+
+.tasks-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}

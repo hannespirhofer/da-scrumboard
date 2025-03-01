@@ -45,8 +45,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        // Load the boards list
-        // this.setBoardList();
         this.setBoardList();
         this.subscribeToRouteId();
     }
@@ -60,17 +58,28 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
 
     setBoardList() {
-        if (this.data.boardlist) {
-            this.userProjects = this.data.boardlist;
-            return;
-        }
+        this.data.boardList$.subscribe({
+            next: (d) => {
+                if (d) {
+                    this.userProjects = d;
+                } else {
+                    this.fetchBoardList();
+                }
+            },
+            error: (e) => {
+                console.error('Couldnt load the board list array.');
+            },
+        })
+    }
+
+    fetchBoardList() {
         this.subscriptions.push(
             this.board.getBoardList().subscribe({
                 next: (list) => {
                     this.userProjects = list
                 }
             })
-        );
+        )
     }
 
     logActiveSubscribers() {
